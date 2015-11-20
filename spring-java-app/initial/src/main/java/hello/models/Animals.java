@@ -3,20 +3,18 @@ package hello;
 public class Animals {
 
 
-    private final long nr;
-    private final String denumire;
-    private final String rasa;
-    private final String nume;
+    private long id;
+    private String denumire;
+    private String rasa;
 
-    public Animals(long nr,String denumire, String rasa, String nume) {
-        this.nr = nr;
+    public Animals(long id,String denumire, String rasa) {
+        this.id = id;
         this.denumire = denumire;
         this.rasa = rasa;
-        this.nume = nume;
     }
 
-    public long getNumar() {
-        return nr;
+    public long getId() {
+        return id;
     }
     
     public String getDenumire() {
@@ -28,8 +26,13 @@ public class Animals {
         return rasa;
     }
     
-    public String getNume() {
-        return nume;
+    
+    public void setDenumire(String denumire) {
+        this.denumire=denumire;
+    }
+    
+    public void setRasa(String rasa) {
+        this.rasa=rasa;
     }
 
 }

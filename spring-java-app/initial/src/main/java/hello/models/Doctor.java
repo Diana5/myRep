@@ -3,27 +3,36 @@ package hello;
 public class Doctor {
 
 
-    private final long numar;
-    private final String nume;
-    private final String prenume;
+    private long id;
+    private String name;
+    private String prenume;
 
-    public Doctor(long numar, String nume, String prenume) {
-        this.numar = numar;
-        this.nume = nume;
+    public Doctor(long id, String name, String prenume) {
+        this.id = id;
+        this.name = name;
         this.prenume = prenume;
     }
 
-    public long getNumar() {
-        return numar;
+    public long getId() {
+        return id;
     }
 
-    public String getNume() {
-        return nume;
+    public String getName() {
+        return name;
     }
     
     public String getPrenume() {
         return prenume;
     }
+
+	public void setName(String name) {
+        this.name=name;
+    }
+    
+    public void setPrenume(String prenume) {
+        this.prenume=prenume;
+    }
+
 
 }
 

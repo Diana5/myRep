@@ -1,25 +1,75 @@
 package hello;
 
-import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import java.util.List;
+import java.util.ArrayList;
 
 @RestController
+
 public class AnimalsController {
+	
+	private List<Animals> animals = new ArrayList<Animals>();
 
-	 private final AtomicLong counter = new AtomicLong();
-	 private static final String template1 = "Animalul %s " ;
-	 private static final String template2 = "de rasa %s" ; 
-	 private static final String template3 = "se numeste %s" ; 
+	  AnimalsController() {
+	    Animals a1 = new Animals(1,"caine", "ciobanesc");
+	    Animals a2 = new Animals(2, "pisica" , "persana");
+	    Animals a3 = new Animals(3, "cal" ,"palomino");
 
+	    animals.add(a1);
+	    animals.add(a2);
+	    animals.add(a3);
+	  }
 
-	    @RequestMapping("/animal")
-	    public Animals animals(@RequestParam(value="denumire", defaultValue="caine") String denumire, 
-	    						@RequestParam(value="rasa", defaultValue="ciobanesc") String rasa, 
-	    						@RequestParam(value="nume", defaultValue="Fredo") String nume) {
-	        return new Animals(counter.incrementAndGet(),
-	                          String.format(template1, denumire),
-						      String.format(template2, rasa),
-						      String.format(template3, nume));}
+	  @RequestMapping(value="/animal", method = RequestMethod.GET)
+	  public List<Animals> index() {
+	    return this.animals;
+	  }
+
+	  @RequestMapping(value="/animal/{id}", method = RequestMethod.GET)
+	  public ResponseEntity show(@PathVariable("id") int id) {
+	    for(Animals a : this.animals) {
+	      if(a.getId() == id) {
+              return new ResponseEntity<Animals>(a, new HttpHeaders(), HttpStatus.OK);
+	      }
+	    }
+	    return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+	  }
+
+	  @RequestMapping(value="/animal/{id}", method = RequestMethod.DELETE)
+	  public ResponseEntity remove(@PathVariable("id") int id) {
+	    for(Animals a : this.animals) {
+	      if(a.getId() == id) {
+	        this.animals.remove(a);
+	        return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NO_CONTENT);
+	      }
+	    }
+	    return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+	  }
+
+	  @RequestMapping(value="/animal/{id}", method = RequestMethod.PUT)
+	  public ResponseEntity put(@PathVariable("id") int id) {
+	    for(Animals a : this.animals) {
+	      if(a.getId() == id) {
+	        a.setDenumire("vaca");
+	        return new ResponseEntity<Animals>(a, new HttpHeaders(), HttpStatus.OK);
+	      }
+	    }
+	    return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+	  }
+	  
+	  @RequestMapping(value="/animal/{denumire}/{rasa}", method = RequestMethod.POST)
+	  public ResponseEntity post(@PathVariable("denumire") String denumire,@PathVariable("rasa") String rasa) {
+	
+		  Animals a4 = new Animals(animals.size() + 1,denumire,rasa);
+		  animals.add(a4);
+	      return new ResponseEntity<Animals>(a4, new HttpHeaders(), HttpStatus.OK);
+	  }
+	  
 }

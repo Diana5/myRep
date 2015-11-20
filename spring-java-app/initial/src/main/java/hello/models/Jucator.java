@@ -3,32 +3,36 @@ package hello;
 public class Jucator {
 
 
-    private final long nr;
-    private final String nume;
-    private final String prenume;
-    private final String echipa;
+    private long id;
+    private  String name;
+    private  String prename;
+    private  String echipa;
 
-    public Jucator(long nr, String nume, String prenume, String echipa) {
-        this.nr = nr;
-        this.nume = nume;
-        this.prenume = prenume;
-	    this.echipa = echipa;
+    public Jucator(long id, String name, String prename) {
+        this.id = id;
+        this.name = name;
+        this.prename = prename;
 	  }
 
-    public long getNr() {
-        return nr;
+    public long getId() {
+        return id;
        }
 
-    public String getNume() {
-        return nume;
+    public String getName() {
+        return name;
        }
     
-    public String getPrenume() {
-        return prenume;
+    public String getPrename() {
+        return prename;
         }
-
-	 public String getEchipa() {
-        return echipa;}
-
+    
+    public void setName(String name) {
+        this.name=name;
+    }
+    
+    public void setPrename(String prename) {
+        this.prename=prename;
+    }
+	
 }
 
