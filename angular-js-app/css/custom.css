@@ -1,15 +1,17 @@
 body {
-  background-color: lightgray;
+
+  
+  background-color:lightgray;
   margin-top:20px;
   margin-bottom:200px;
 }
 
 .label {
-  margin-right: 3px;
+  margin-right:5px;
 }
 
 .comments blockquote {
-  margin-top: 3px;
+  margin-top:5px;
 }
 
 
