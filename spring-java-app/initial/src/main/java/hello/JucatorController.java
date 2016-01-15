@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -32,6 +33,14 @@ public class JucatorController {
 	    return this.jucatori;
 	  }
 
+    
+    @RequestMapping(value="/jucator", method = RequestMethod.POST)
+  public ResponseEntity create(@RequestBody Jucator j) {
+	jucatori.add(j);
+	
+    return new ResponseEntity<Jucator>(j, new HttpHeaders(), HttpStatus.OK);
+  }
+    
 	  @RequestMapping(value="/jucator/{id}", method = RequestMethod.GET)
 	  public ResponseEntity show(@PathVariable("id") int id) {
 	    for(Jucator j : this.jucatori) {
@@ -53,23 +62,15 @@ public class JucatorController {
 	    return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
 	  }
 
-	  @RequestMapping(value="/jucator/{id}", method = RequestMethod.PUT)
-	  public ResponseEntity put(@PathVariable("id") int id) {
-	    for(Jucator j : this.jucatori) {
-	      if(j.getId() == id) {
-	        j.setName("James");
-	        return new ResponseEntity<Jucator>(j, new HttpHeaders(), HttpStatus.OK);
-	      }
-	    }
-	    return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-	  }
-	  
-	  @RequestMapping(value="/jucator/{name}/{prename}", method = RequestMethod.POST)
-	  public ResponseEntity post(@PathVariable("name") String name,@PathVariable("prename") String prename) {
-	
-		  Jucator j4 = new Jucator(jucatori.size() + 1,name,prename);
-		  jucatori.add(j4);
-	      return new ResponseEntity<Jucator>(j4, new HttpHeaders(), HttpStatus.OK);
-	  }
-	  
+
+  @RequestMapping(value="/jucator/{id}/{name}", method = RequestMethod.PUT)
+  public List<Jucator> update(@PathVariable("id") int id,@PathVariable("name") String name){
+    for(Jucator j : this.jucatori){
+      if(j.getId() == id)		  {
+		  j.setName(name);
+      }
+    }
+    return this.jucatori;
+  }
+  
 }

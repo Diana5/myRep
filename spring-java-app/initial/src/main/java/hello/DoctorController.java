@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -53,23 +54,21 @@ public class DoctorController {
 	    return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
 	  }
 
-	  @RequestMapping(value="/doctor/{id}", method = RequestMethod.PUT)
-	  public ResponseEntity put(@PathVariable("id") int id) {
-	    for(Doctor d : this.doctori) {
-	      if(d.getId() == id) {
-	        d.setName("Mircea");
-	        return new ResponseEntity<Doctor>(d, new HttpHeaders(), HttpStatus.OK);
-	      }
-	    }
-	    return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-	  }
+  @RequestMapping(value="/doctor/{id}/{name}", method = RequestMethod.PUT)
+  public List<Doctor> update(@PathVariable("id") int id,@PathVariable("name") String name){
+    for(Doctor d : this.doctori){
+      if(d.getId() == id)		  {
+		  d.setName(name);
+      }
+    }
+    return this.doctori; 
+  }
 	  
-	  @RequestMapping(value="/doctor/{name}/{prenume}", method = RequestMethod.POST)
-	  public ResponseEntity post(@PathVariable("name") String name,@PathVariable("prenume") String prenume) {
+@RequestMapping(value="/doctor", method = RequestMethod.POST)
+  public ResponseEntity create(@RequestBody Doctor d) {
+	doctori.add(d);
 	
-		  Doctor d4 = new Doctor(doctori.size() + 1,name,prenume);
-		  doctori.add(d4);
-	      return new ResponseEntity<Doctor>(d4, new HttpHeaders(), HttpStatus.OK);
-	  }
+    return new ResponseEntity<Doctor>(d, new HttpHeaders(), HttpStatus.OK);
+  }
 	  
 }

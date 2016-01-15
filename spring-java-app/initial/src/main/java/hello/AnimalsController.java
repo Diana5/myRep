@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -53,23 +54,22 @@ public class AnimalsController {
 	    return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
 	  }
 
-	  @RequestMapping(value="/animal/{id}", method = RequestMethod.PUT)
-	  public ResponseEntity put(@PathVariable("id") int id) {
-	    for(Animals a : this.animals) {
-	      if(a.getId() == id) {
-	        a.setDenumire("vaca");
-	        return new ResponseEntity<Animals>(a, new HttpHeaders(), HttpStatus.OK);
-	      }
-	    }
-	    return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-	  }
+ @RequestMapping(value="/animal/{id}/{denumire}", method = RequestMethod.PUT)
+  public List<Animals> update(@PathVariable("id") int id,@PathVariable("denumire") String denumire){
+    for(Animals a : this.animals){
+      if(a.getId() == id)		  {
+		  a.setDenumire(denumire);
+      }
+    }
+    return this.animals;
+  }
 	  
-	  @RequestMapping(value="/animal/{denumire}/{rasa}", method = RequestMethod.POST)
-	  public ResponseEntity post(@PathVariable("denumire") String denumire,@PathVariable("rasa") String rasa) {
+	 
+@RequestMapping(value="/animal", method = RequestMethod.POST)
+  public ResponseEntity create(@RequestBody Animals a) {
+	animals.add(a);
 	
-		  Animals a4 = new Animals(animals.size() + 1,denumire,rasa);
-		  animals.add(a4);
-	      return new ResponseEntity<Animals>(a4, new HttpHeaders(), HttpStatus.OK);
-	  }
+    return new ResponseEntity<Animals>(a, new HttpHeaders(), HttpStatus.OK);
+  }
 	  
 }
