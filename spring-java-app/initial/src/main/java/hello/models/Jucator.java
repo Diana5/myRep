@@ -1,11 +1,16 @@
 package hello;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Jucator {
 
 
     private long id;
     private  String name;
     private  String prename;
+    
+     public Jucator() {}
 
     public Jucator(long id, String name, String prename) {
         this.id = id;

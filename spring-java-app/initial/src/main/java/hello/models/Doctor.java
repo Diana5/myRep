@@ -1,11 +1,15 @@
 package hello;
 
-public class Doctor {
+import java.util.List;
+import java.util.ArrayList;
 
+public class Doctor {
 
     private long id;
     private String name;
     private String prenume;
+    
+    public Doctor() {}
 
     public Doctor(long id, String name, String prenume) {
         this.id = id;

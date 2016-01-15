@@ -1,11 +1,16 @@
 package hello;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Animals {
 
 
     private long id;
     private String denumire;
     private String rasa;
+    
+     public Animals() {}
 
     public Animals(long id,String denumire, String rasa) {
         this.id = id;
